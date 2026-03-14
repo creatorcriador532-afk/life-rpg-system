@@ -3,40 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SISTEMA: ASCENSÃO DO MONARCA</title>
+    <title>SISTEMA DE EVOLUÇÃO</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
+    <div class="scanline"></div>
     <div id="background-layer"></div>
 
-    <div id="victory-screen" class="hidden"></div>
-
-    <div id="ui-wrapper">
-        <header class="hologram-panel">
-            <h1>SISTEMA DE EVOLUÇÃO</h1>
-            <p>STATUS: <span id="rank-text" style="color: #00ffff; font-weight: bold;">RANK E</span></p>
-        </header>
-
-        <main class="hologram-panel">
-            <h3>MISSÕES DE MÉRITO</h3>
-            <div class="mission-box">
-                <button id="btn-1" class="task-btn" onclick="concluirTarefa(1)">1. FOCO PROFUNDO (45 MIN)</button>
-                <button id="btn-2" class="task-btn" onclick="concluirTarefa(2)">2. TREINO FÍSICO (20 MIN)</button>
-                <button id="btn-3" class="task-btn" onclick="concluirTarefa(3)">3. ORGANIZAÇÃO DIÁRIA</button>
-            </div>
-        </main>
-
-        <div class="inventory-section">
-            <h4>ARSENAL CONQUISTADO</h4>
-            <div class="inventory-grid">
-                <div class="slot" id="slot-1"></div>
-                <div class="slot" id="slot-2"></div>
-                <div class="slot" id="slot-3"></div>
+    <div class="main-system">
+        <div class="header-status">
+            <div class="rank-hex">E</div>
+            <div class="player-info">
+                <p class="label">PLAYER: MONARCA</p>
+                <div class="exp-bar"><div class="exp-fill" id="fill"></div></div>
             </div>
         </div>
+
+        <div class="mission-container">
+            <h2 class="glow-text">MISSÕES DIÁRIAS</h2>
+            <div class="quest-card" onclick="concluirTarefa(1, this)">
+                <span class="q-title">MENTE DE AÇO</span>
+                <span class="q-desc">45min Foco Profundo</span>
+            </div>
+            <div class="quest-card" onclick="concluirTarefa(2, this)">
+                <span class="q-title">TEMPLO DO CORPO</span>
+                <span class="q-desc">Treino de Alta Intensidade</span>
+            </div>
+            <div class="quest-card" onclick="concluirTarefa(3, this)">
+                <span class="q-title">VIGÍLIA NOTURNA</span>
+                <span class="q-desc">Planeamento Estratégico</span>
+            </div>
+        </div>
+
+        <div class="inventory-hex">
+            <div class="slot" id="slot-1"></div>
+            <div class="slot" id="slot-2"></div>
+        </div>
     </div>
+
+    <div id="victory-screen" class="hidden"></div>
 
     <script src="game.js"></script>
 </body>
