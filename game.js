@@ -1,166 +1,33 @@
-let player = {
-    level: 1, xp: 0, xpNext: 100, gold: 0, mp: 100, mpMax: 100,
-    rank: "E", worldLevel: 1, prestige: 0,
-    stats: { for: 1, int: 1, wis: 1, vit: 1, agi: 1 },
-    inventory: []
-};
+let tarefasConcluidas = 0;
 
-let currentBoss = { name: "Procrastinação", hp: 100, maxHp: 100 };
-
-// --- LÓGICA DE INICIALIZAÇÃO ---
-function init() {
-    load();
-    renderQuests();
-    setInterval(regenMana, 5000); // Regenera mana a cada 5s
-    setInterval(bossPenalty, 10000); // Chefe tira gold a cada 10s
-    updateUI();
-}
-
-function updateUI() {
-    document.getElementById("level").innerText = player.level;
-    document.getElementById("xp-fill").style.width = (player.xp / player.xpNext * 100) + "%";
-    document.getElementById("mp").innerText = Math.floor(player.mp);
-    document.getElementById("mpMax").innerText = player.mpMax;
-    document.getElementById("mp-fill").style.width = (player.mp / player.mpMax * 100) + "%";
-    document.getElementById("gold").innerText = player.gold;
-    document.getElementById("rank").innerText = player.rank;
-    document.getElementById("worldLevel").innerText = player.worldLevel;
-    document.getElementById("prestigeCount").innerText = player.prestige;
-    
-    // Status
-    for (let s in player.stats) { document.getElementById(s).innerText = player.stats[s]; }
-
-    // Boss
-    document.getElementById("bossName").innerText = currentBoss.name;
-    document.getElementById("boss-hp-fill").style.width = (currentBoss.hp / currentBoss.maxHp * 100) + "%";
-
-    // Botão Prestígio
-    document.getElementById("prestigeBtn").style.display = player.level >= 100 ? "block" : "none";
-
-    renderInventory();
-    renderSkills();
-    save();
-}
-
-// --- MECÂNICAS DE JOGO ---
-function quest(type, xpGain, goldGain) {
-    player.stats[type]++;
-    player.gold += goldGain;
-    gainXP(xpGain);
-    checkSkillUnlocks();
-    updateUI();
-}
-
-function gainXP(val) {
-    player.xp += val;
-    if (player.xp >= player.xpNext) {
-        player.level++;
-        player.xp = 0;
-        player.xpNext = Math.floor(player.level * 150 + 100);
-        alert("LEVEL UP! Você está mais perto do topo.");
+function concluirTarefa(id) {
+    const btn = document.getElementById('btn-' + id);
+    if (!btn.disabled) {
+        btn.disabled = true;
+        btn.style.backgroundColor = "#00ff00";
+        tarefasConcluidas++;
+        
+        if (tarefasConcluidas === 3) {
+            liberarRecompensa();
+        }
     }
 }
 
-function attackBoss() {
-    let damage = player.stats.for + player.stats.agi;
-    currentBoss.hp -= damage;
-    if (currentBoss.hp <= 0) {
-        alert("CHEFE DERROTADO!");
-        player.gold += 50 * player.worldLevel;
-        nextBoss();
-    }
-    updateUI();
+function liberarRecompensa() {
+    // Mostra a tela de vitória com a sua imagem
+    const victory = document.getElementById('victory-screen');
+    victory.innerHTML = `
+        <div style="text-align:center; padding-top: 10vh;">
+            <img src="vitoria.png" style="width: 70%; border: 3px solid #00ffff;">
+            <h1 style="color:#00ffff; text-shadow: 0 0 10px #00ffff;">MÉRITO RECONHECIDO!</h1>
+            <button onclick="document.getElementById('victory-screen').classList.add('hidden')" 
+                    style="padding: 15px 30px; background: none; border: 1px solid #00ffff; color: #00ffff; cursor: pointer;">
+                CONTINUAR ASCENSÃO
+            </button>
+        </div>
+    `;
+    victory.classList.remove('hidden');
+
+    // Adiciona a arma ao inventário
+    document.getElementById('slot-1').innerHTML = `<img src="laminas.png" style="width:100%; height:100%; object-fit:cover;">`;
 }
-
-function nextBoss() {
-    player.worldLevel++;
-    const titles = ["Monarca", "Soberano", "Lorde", "Devorador"];
-    const names = ["das Sombras", "do Caos", "do Vazio", "da Inércia"];
-    let newName = titles[Math.floor(Math.random()*titles.length)] + " " + names[Math.floor(Math.random()*names.length)];
-    
-    let newHp = 100 * player.worldLevel * (player.level / 2);
-    currentBoss = { name: newName, hp: newHp, maxHp: newHp };
-}
-
-function bossPenalty() {
-    if (currentBoss.hp > 0 && player.gold > 0) {
-        player.gold = Math.max(0, player.gold - (2 * player.worldLevel));
-        updateUI();
-    }
-}
-
-function regenMana() {
-    if (player.mp < player.mpMax) {
-        player.mp = Math.min(player.mpMax, player.mp + (5 + player.stats.wis));
-        updateUI();
-    }
-}
-
-function checkSkillUnlocks() {
-    // Exemplo de skill por atributo
-    if (player.stats.agi >= 10 && !hasSkill("Arrancada")) {
-        player.inventory.push({ name: "Arrancada", type: "SKILL", desc: "Dano massivo (Custo: 40 MP)" });
-    }
-}
-
-function hasSkill(name) { return player.inventory.some(i => i.name === name); }
-
-function useSkill(name) {
-    if (player.mp >= 40) {
-        player.mp -= 40;
-        if (name === "Arrancada") currentBoss.hp -= (player.stats.agi * 10);
-        updateUI();
-    } else { alert("Mana insuficiente!"); }
-}
-
-function prestige() {
-    player.prestige++;
-    player.level = 1;
-    player.stats.for += 10; player.stats.int += 10; // Bônus permanente
-    alert("TRANSCENDÊNCIA CONCLUÍDA!");
-    updateUI();
-}
-
-// --- INTERFACE ---
-function renderQuests() {
-    const list = document.getElementById("questList");
-    const tasks = [
-        { n: "Treinar", t: "for" }, { n: "Estudar", t: "int" },
-        { n: "Meditar", t: "wis" }, { n: "Trabalhar", t: "agi" }
-    ];
-    tasks.forEach(t => {
-        let btn = document.createElement("button");
-        btn.innerText = t.n;
-        btn.onclick = () => quest(t.t, 20, 10);
-        list.appendChild(btn);
-    });
-}
-
-function renderSkills() {
-    const list = document.getElementById("skillsList");
-    list.innerHTML = "";
-    player.inventory.filter(i => i.type === "SKILL").forEach(s => {
-        let div = document.createElement("div");
-        div.className = "skill-card active";
-        div.innerHTML = `<b>${s.name}</b><br><button onclick="useSkill('${s.name}')">USAR</button>`;
-        list.appendChild(div);
-    });
-}
-
-function renderInventory() {
-    const list = document.getElementById("inventoryList");
-    list.innerHTML = "";
-    player.inventory.filter(i => i.type !== "SKILL").forEach(i => {
-        let li = document.createElement("li");
-        li.innerText = i.name;
-        list.appendChild(li);
-    });
-}
-
-function save() { localStorage.setItem("lifeRPG_pro", JSON.stringify(player)); }
-function load() {
-    let d = localStorage.getItem("lifeRPG_pro");
-    if(d) player = JSON.parse(d);
-}
-
-init();
