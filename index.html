@@ -2,69 +2,42 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Life RPG - Solo Leveling System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISTEMA: ASCENSÃO DO MONARCA</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="system-panel">
-        <header>
+
+    <div id="background-layer"></div>
+
+    <div id="victory-screen" class="hidden"></div>
+
+    <div id="ui-wrapper">
+        <header class="hologram-panel">
             <h1>SISTEMA DE EVOLUÇÃO</h1>
-            <div class="world-info">
-                RANK: <span id="rank">E</span> | WORLD LVL: <span id="worldLevel">1</span>
-            </div>
+            <p>STATUS: <span id="rank-text" style="color: #00ffff; font-weight: bold;">RANK E</span></p>
         </header>
 
-        <div class="player-area">
-            <div class="visual">
-                <img src="assets/player.gif" id="player" alt="Avatar">
-                <div class="prestige-badge">Prestígio: <span id="prestigeCount">0</span></div>
+        <main class="hologram-panel">
+            <h3>MISSÕES DE MÉRITO</h3>
+            <div class="mission-box">
+                <button id="btn-1" class="task-btn" onclick="concluirTarefa(1)">1. FOCO PROFUNDO (45 MIN)</button>
+                <button id="btn-2" class="task-btn" onclick="concluirTarefa(2)">2. TREINO FÍSICO (20 MIN)</button>
+                <button id="btn-3" class="task-btn" onclick="concluirTarefa(3)">3. ORGANIZAÇÃO DIÁRIA</button>
             </div>
-
-            <div class="stats">
-                <p>Nível: <span id="level">1</span></p>
-                <div class="bar-container"><div id="xp-fill" class="fill"></div></div>
-                <p>Mana: <span id="mp">100</span>/<span id="mpMax">100</span></p>
-                <div class="bar-container mana"><div id="mp-fill" class="fill"></div></div>
-                <p>Gold: <span id="gold">0</span></p>
-
-                <div class="attributes">
-                    <span>FOR: <b id="for">1</b></span>
-                    <span>INT: <b id="int">1</b></span>
-                    <span>VIT: <b id="vit">1</b></span>
-                    <span>AGI: <b id="agi">1</b></span>
-                    <span>WIS: <b id="wis">1</b></span>
-                </div>
-            </div>
-        </div>
-
-        <div class="actions">
-            <h2>MISSÕES DIÁRIAS</h2>
-            <div id="questList"></div>
-        </div>
-
-        <div class="boss-section">
-            <h2>CHEFE ATUAL</h2>
-            <p><strong id="bossName">Inimigo</strong></p>
-            <div class="bar-container boss"><div id="boss-hp-fill" class="fill"></div></div>
-            <button class="btn-attack" onclick="attackBoss()">ATACAR (FOR + AGI)</button>
-        </div>
-
-        <div class="skills-section">
-            <h2>HABILIDADES</h2>
-            <div id="skillsList" class="skills-container"></div>
-        </div>
+        </main>
 
         <div class="inventory-section">
-            <h2>INVENTÁRIO</h2>
-            <ul id="inventoryList"></ul>
+            <h4>ARSENAL CONQUISTADO</h4>
+            <div class="inventory-grid">
+                <div class="slot" id="slot-1"></div>
+                <div class="slot" id="slot-2"></div>
+                <div class="slot" id="slot-3"></div>
+            </div>
         </div>
-
-        <button id="prestigeBtn" onclick="prestige()" style="display:none;">TRANSCENDER (LVL 100)</button>
     </div>
 
-    <script src="data.js"></script>
     <script src="game.js"></script>
 </body>
 </html>
