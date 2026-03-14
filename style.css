@@ -1,130 +1,49 @@
-/* Importando uma fonte tecnológica */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-
-:root {
-    --system-blue: #00ceea;
-    --system-dark: #050a0f;
-    --system-bg: rgba(5, 10, 15, 0.9);
-    --mana-purple: #9d00ff;
-    --boss-red: #ff4d4d;
-}
-
-body {
-    background-color: #000;
-    background-image: radial-gradient(circle, #0a192f 0%, #000 100%);
-    color: var(--system-blue);
-    font-family: 'Orbitron', sans-serif;
+body, html {
     margin: 0;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-}
-
-.system-panel {
+    padding: 0;
     width: 100%;
-    max-width: 500px;
-    background: var(--system-bg);
-    border: 2px solid var(--system-blue);
-    box-shadow: 0 0 20px rgba(0, 206, 234, 0.3);
-    padding: 20px;
-    border-radius: 5px;
-    clip-path: polygon(0 2%, 2% 0, 98% 0, 100% 2%, 100% 98%, 98% 100%, 2% 100%, 0 98%);
-}
-
-h1, h2 {
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    border-bottom: 1px solid var(--system-blue);
-    padding-bottom: 5px;
-}
-
-.world-info {
-    text-align: center;
-    font-size: 0.8em;
-    margin-bottom: 20px;
-}
-
-/* Barras de Status */
-.bar-container {
-    width: 100%;
-    height: 15px;
-    background: #111;
-    border: 1px solid var(--system-blue);
-    margin: 5px 0 15px 0;
-    position: relative;
-}
-
-.fill {
     height: 100%;
-    width: 0%;
-    transition: width 0.5s ease-in-out;
-}
-
-#xp-fill { background: var(--system-blue); box-shadow: 0 0 10px var(--system-blue); }
-#mp-fill { background: var(--mana-purple); box-shadow: 0 0 10px var(--mana-purple); }
-.boss .fill { background: var(--boss-red); box-shadow: 0 0 10px var(--boss-red); }
-
-/* Atributos */
-.attributes {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    background: rgba(0, 206, 234, 0.05);
-    padding: 10px;
-    border-radius: 5px;
-}
-
-/* Botões */
-button {
-    background: transparent;
-    color: var(--system-blue);
-    border: 1px solid var(--system-blue);
-    padding: 10px;
-    width: 100%;
-    margin: 5px 0;
-    font-family: 'Orbitron', sans-serif;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    background: var(--system-blue);
-    color: #000;
-    box-shadow: 0 0 15px var(--system-blue);
-}
-
-.btn-attack {
-    border-color: var(--boss-red);
-    color: var(--boss-red);
-    font-weight: bold;
-}
-
-.btn-attack:hover {
-    background: var(--boss-red);
+    background-color: #000;
     color: #fff;
-    box-shadow: 0 0 15px var(--boss-red);
+    font-family: 'Orbitron', sans-serif;
+    overflow: hidden;
 }
 
-/* Habilidades */
-.skills-container {
+#background-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('monarca.png'); /* Usa a sua imagem monarca.png */
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.4);
+    z-index: -1;
+}
+
+.hologram-panel {
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid #00ffff;
+    box-shadow: 0 0 15px #00ffff;
+    padding: 20px;
+    margin: 20px;
+    backdrop-filter: blur(5px);
+}
+
+.inventory {
+    position: fixed;
+    bottom: 20px;
     display: flex;
     gap: 10px;
-    overflow-x: auto;
-    padding: 10px 0;
-}
-
-.skill-card {
-    min-width: 100px;
-    border: 1px solid var(--mana-purple);
     padding: 10px;
-    text-align: center;
-    background: rgba(157, 0, 255, 0.1);
 }
 
-#player {
-    display: block;
-    margin: 0 auto;
-    width: 120px;
-    filter: drop-shadow(0 0 10px var(--system-blue));
+.slot {
+    width: 80px;
+    height: 80px;
+    border: 1px dashed #00ffff;
+    background: rgba(0,0,0,0.6);
 }
+
+.hidden { display: none; }
