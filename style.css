@@ -1,49 +1,77 @@
-body, html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000;
+:root {
+    --neon-blue: #00e5ff;
+    --dark-blue: #001a1d;
+}
+
+body {
+    background: #000;
     color: #fff;
     font-family: 'Orbitron', sans-serif;
-    overflow: hidden;
+    margin: 0;
+    height: 100vh;
 }
 
 #background-layer {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('monarca.png'); /* Usa a sua imagem monarca.png */
-    background-size: cover;
-    background-position: center;
-    filter: brightness(0.4);
+    width: 100%; height: 100%;
+    background: url('monarca.png') center/cover;
+    filter: brightness(0.3) saturate(1.5);
     z-index: -1;
 }
 
-.hologram-panel {
-    background: rgba(0, 255, 255, 0.1);
-    border: 1px solid #00ffff;
-    box-shadow: 0 0 15px #00ffff;
-    padding: 20px;
-    margin: 20px;
-    backdrop-filter: blur(5px);
-}
-
-.inventory {
+/* Efeito de linhas de monitor antigo */
+.scanline {
     position: fixed;
-    bottom: 20px;
+    top: 0; width: 100%; height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.main-system {
     display: flex;
-    gap: 10px;
-    padding: 10px;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 5vh;
 }
 
-.slot {
-    width: 80px;
-    height: 80px;
-    border: 1px dashed #00ffff;
-    background: rgba(0,0,0,0.6);
+.quest-card {
+    background: rgba(0, 229, 255, 0.05);
+    border-left: 4px solid var(--neon-blue);
+    margin: 10px;
+    padding: 20px;
+    width: 350px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-shadow: 0 0 5px var(--neon-blue);
 }
 
-.hidden { display: none; }
+.quest-card:hover {
+    background: rgba(0, 229, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.quest-card.completed {
+    border-left-color: #555;
+    opacity: 0.4;
+}
+
+.rank-hex {
+    font-size: 3rem;
+    border: 2px solid var(--neon-blue);
+    padding: 10px 25px;
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    box-shadow: 0 0 20px var(--neon-blue);
+}
+
+#victory-screen {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 100;
+}
+
+.hidden { display: none !important; }
