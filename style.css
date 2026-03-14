@@ -1,77 +1,95 @@
-:root {
-    --neon-blue: #00e5ff;
-    --dark-blue: #001a1d;
-}
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap');
 
 body {
+    margin: 0;
+    padding: 0;
     background: #000;
     color: #fff;
     font-family: 'Orbitron', sans-serif;
-    margin: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100vh;
 }
 
+/* O Fundo é a sua imagem monarca.png */
 #background-layer {
     position: fixed;
-    width: 100%; height: 100%;
-    background: url('monarca.png') center/cover;
-    filter: brightness(0.3) saturate(1.5);
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: url('monarca.png') no-repeat center center;
+    background-size: cover;
+    filter: brightness(0.4) contrast(1.2);
     z-index: -1;
 }
 
-/* Efeito de linhas de monitor antigo */
-.scanline {
-    position: fixed;
-    top: 0; width: 100%; height: 100%;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-    background-size: 100% 2px, 3px 100%;
-    pointer-events: none;
-    z-index: 10;
+/* Container Principal flutuante */
+.system-ui {
+    width: 90%;
+    max-width: 500px;
+    background: rgba(0, 20, 30, 0.7);
+    border: 2px solid #00ffff;
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.5), inset 0 0 15px rgba(0, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 5px;
+    text-align: center;
 }
 
-.main-system {
+h1 {
+    font-size: 1.5rem;
+    letter-spacing: 5px;
+    color: #00ffff;
+    text-shadow: 0 0 10px #00ffff;
+    margin-bottom: 20px;
+}
+
+.mission-list {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding-top: 5vh;
+    gap: 15px;
 }
 
-.quest-card {
-    background: rgba(0, 229, 255, 0.05);
-    border-left: 4px solid var(--neon-blue);
-    margin: 10px;
-    padding: 20px;
-    width: 350px;
+/* Botões Estilo Holograma */
+.task-card {
+    background: rgba(0, 255, 255, 0.05);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    padding: 15px;
     cursor: pointer;
     transition: 0.3s;
-    text-shadow: 0 0 5px var(--neon-blue);
+    text-transform: uppercase;
+    font-size: 0.8rem;
 }
 
-.quest-card:hover {
-    background: rgba(0, 229, 255, 0.2);
-    transform: scale(1.05);
+.task-card:hover {
+    background: rgba(0, 255, 255, 0.2);
+    border: 1px solid #00ffff;
+    box-shadow: 0 0 15px #00ffff;
+    transform: scale(1.02);
 }
 
-.quest-card.completed {
-    border-left-color: #555;
-    opacity: 0.4;
+.inventory {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
 }
 
-.rank-hex {
-    font-size: 3rem;
-    border: 2px solid var(--neon-blue);
-    padding: 10px 25px;
-    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-    box-shadow: 0 0 20px var(--neon-blue);
+.slot {
+    width: 70px; height: 70px;
+    border: 1px solid #00ffff;
+    background: rgba(0,0,0,0.8);
+    display: flex; align-items: center; justify-content: center;
 }
 
+/* Tela de Vitória Epic */
 #victory-screen {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.9);
-    display: flex; justify-content: center; align-items: center;
-    z-index: 100;
+    z-index: 1000;
+    display: none; /* Escondido por padrão */
+    flex-direction: column;
+    justify-content: center; align-items: center;
 }
-
-.hidden { display: none !important; }
