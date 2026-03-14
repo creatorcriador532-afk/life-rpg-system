@@ -2,47 +2,32 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SISTEMA DE EVOLUÇÃO</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="scanline"></div>
     <div id="background-layer"></div>
 
-    <div class="main-system">
-        <div class="header-status">
-            <div class="rank-hex">E</div>
-            <div class="player-info">
-                <p class="label">PLAYER: MONARCA</p>
-                <div class="exp-bar"><div class="exp-fill" id="fill"></div></div>
-            </div>
+    <div class="system-ui">
+        <h1>SISTEMA DE MÉRITO</h1>
+        <p style="color: #00ffff;">RANK: <span id="rank">E</span></p>
+        
+        <div class="mission-list">
+            <div class="task-card" onclick="check(1, this)">1. Foco Profundo (45min)</div>
+            <div class="task-card" onclick="check(2, this)">2. Treino de Elite (20min)</div>
+            <div class="task-card" onclick="check(3, this)">3. Planeamento Estratégico</div>
         </div>
 
-        <div class="mission-container">
-            <h2 class="glow-text">MISSÕES DIÁRIAS</h2>
-            <div class="quest-card" onclick="concluirTarefa(1, this)">
-                <span class="q-title">MENTE DE AÇO</span>
-                <span class="q-desc">45min Foco Profundo</span>
-            </div>
-            <div class="quest-card" onclick="concluirTarefa(2, this)">
-                <span class="q-title">TEMPLO DO CORPO</span>
-                <span class="q-desc">Treino de Alta Intensidade</span>
-            </div>
-            <div class="quest-card" onclick="concluirTarefa(3, this)">
-                <span class="q-title">VIGÍLIA NOTURNA</span>
-                <span class="q-desc">Planeamento Estratégico</span>
-            </div>
-        </div>
-
-        <div class="inventory-hex">
-            <div class="slot" id="slot-1"></div>
-            <div class="slot" id="slot-2"></div>
+        <div class="inventory">
+            <div class="slot" id="slot-1">?</div>
+            <div class="slot" id="slot-2">?</div>
         </div>
     </div>
 
-    <div id="victory-screen" class="hidden"></div>
+    <div id="victory-screen">
+        <img src="vitoria.png" style="width: 80%; max-width: 600px;">
+        <button onclick="location.reload()" style="margin-top:20px; background:none; border:1px solid #0ff; color:#0ff; padding:10px 20px; cursor:pointer;">FECHAR</button>
+    </div>
 
     <script src="game.js"></script>
 </body>
